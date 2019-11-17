@@ -10,8 +10,9 @@ const StyledHome = styled.main`
     justify-content: center;
   }
   .description {
-    max-width: 70rem;
+    max-width: 74rem;
     margin: 0 auto 5rem;
+    padding: 2rem;
     h1 {
       margin: 3rem 0 2rem;
     }

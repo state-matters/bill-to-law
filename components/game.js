@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { colors } from "constants"
+import { colors, steps } from "constants"
 import { motion, AnimatePresence } from "framer-motion"
 
 const StyledGame = styled.div`
-  margin: 4rem auto 2rem;
-  flex: 1;
-  background: #88a9bf;
-  width: 100%;
-  max-width: 70rem;
-  max-height: 50rem;
-  border-radius: 4px;
-  box-shadow: 0 3rem 3rem -2rem rgba(10, 10, 10, 0.6);
   display: flex;
   flex-direction: column;
+  flex: 1;
+  margin: 0 auto;
+  background: #88a9bf;
+  box-shadow: 0 3rem 3rem -2rem rgba(10, 10, 10, 0.6);
+  height: calc(100vh - 4rem);
+  width: 100%;
+  max-width: 70rem;
   overflow: hidden;
+  @media (min-width: 60rem) {
+    margin: 4rem auto 2rem;
+    border-radius: 4px;
+    height: 50rem;
+  }
 `
 
 const StyledSplash = styled(motion.section)`
