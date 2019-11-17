@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { colors } from "constants"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const StyledGame = styled.div`
   margin: 4rem auto 2rem;
@@ -30,6 +30,8 @@ const StyledSplash = styled(motion.section)`
   .title {
     position: absolute;
     object-fit: cover;
+    user-select: none;
+    touch-action: none;
   }
   .background {
     top: 0;
@@ -74,7 +76,7 @@ const StyledSplash = styled(motion.section)`
   }
 `
 
-function Splash() {
+function Splash({ setIdx, currentIdx }) {
   const [[x, y], set] = useState([0, 0])
   const spring = {
     type: "spring",
@@ -89,9 +91,15 @@ function Splash() {
     set(calc(x, y))
   }
   return (
-    <StyledSplash onMouseMove={handleMouse}>
+    <StyledSplash
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onMouseMove={handleMouse}
+    >
       <img src="/images/splash/background.svg" className="background"></img>
       <motion.img
+        draggable="false"
         src="/images/splash/capitol.svg"
         className="capitol"
         transition={spring}
@@ -99,6 +107,7 @@ function Splash() {
         animate={{ x: x / 10 + 24, y: y / 10, opacity: 1, scale: 1 }}
       />
       <motion.img
+        draggable="false"
         src="/images/splash/foreground.svg"
         className="capitol"
         transition={spring}
@@ -106,26 +115,33 @@ function Splash() {
         animate={{ x: x / 12 - 48, y: y / 12 + 6, opacity: 1, scale: 1 }}
       />
       <motion.img
-        src="/images/splash/bill.svg"
-        className="bill"
-        transition={spring}
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={{ x: x / 12 + 35, y: y / 10 - 12, opacity: 1, scale: 1 }}
-      />
-      <motion.img
+        draggable="false"
         src="/images/splash/title.svg"
         className="title"
         transition={spring}
         initial={{ opacity: 0, scale: 0.7 }}
         animate={{ x: x / 18, y: y / 15, opacity: 1, scale: 1 }}
       />
-      <motion.button whileHover={{ scale: 1.1 }}>Get Started</motion.button>
+      <motion.button
+        onClick={e => setIdx(currentIdx + 1)}
+        whileHover={{ scale: 1.1 }}
+      >
+        Play Now
+      </motion.button>
     </StyledSplash>
   )
 }
 
 function House() {
-  return <h1>Send your bill through the house</h1>
+  return (
+    <motion.h1
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      Send your bill through the house
+    </motion.h1>
+  )
 }
 
 function Senate() {
@@ -138,7 +154,9 @@ export default function Game() {
   const CurrentStep = steps[currentIdx]
   return (
     <StyledGame>
-      <CurrentStep />
+      <AnimatePresence>
+        <CurrentStep setIdx={setIdx} currentIdx={currentIdx} />
+      </AnimatePresence>
     </StyledGame>
   )
 }

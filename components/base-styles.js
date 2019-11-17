@@ -17,7 +17,7 @@ export default createGlobalStyle`
     font-family: "Poppins", sans-serif;
     font-size: 1.334rem;
     line-height: 1.5;
-    background: ${colors.purple_700};
+    background: ${colors.ui_900};
     color: ${colors.ui_100};
   }
   h1 {
